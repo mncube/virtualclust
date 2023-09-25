@@ -1,10 +1,16 @@
 Package: virtualclust
-Title: What the Package Does (One Line, Title Case)
+Title: Clustered and Virtual Student Data
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("Mackson", "Ncube", , "macksonncube.stats@gmail.com", role = c("aut", "cre", "cph"))
+Description: When student data has a nested structure, the statistical models
+  often need to be adjusted for clustering. In some situations, the comparison
+  group data is virtual data where first a many-to-one matching process is used
+  to match treatment and control student data and then control students are
+  summarized into one virtual control for each treatment student. The
+  'virtualclust' package provides tools to simulate data and compare models for
+  such data strucures. The sim_tc_cv() function is used to generate data while
+  the vc_summary() function is used to compare results from statistical models.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

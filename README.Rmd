@@ -24,7 +24,7 @@ The goal of virtualclust is to ...
 
 You can install the development version of virtualclust like so:
 
-``` r
+```{r eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("mncube/virtualclust")
 ```

@@ -29,9 +29,10 @@ convert_to_long <- function(data) {
 mixed_model_pair <- function(data) {
   long_data <- convert_to_long(data$combined_data)
   model <- lmerTest::lmer(post_score ~ group + (1|student_id), data = long_data)
-  result <- broom.mixed::tidy(model)
-  result$conf.low <- stats::confint(model, level = 0.95)[, 1]
-  result$conf.high <- stats::confint(model, level = 0.95)[, 2]
+
+  # Using broom.mixed::tidy to get results, which should include confidence intervals
+  result <- broom.mixed::tidy(model, conf.int = TRUE, conf.level = 0.95)
+
   return(result)
 }
 
@@ -47,9 +48,7 @@ mixed_model_pair <- function(data) {
 mixed_model_shared_group <- function(data) {
   long_data <- convert_to_long(data$combined_data)
   model <- lmerTest::lmer(post_score ~ group + (1|teacher), data = long_data)
-  result <- broom.mixed::tidy(model)
-  result$conf.low <- stats::confint(model, level = 0.95)[, 1]
-  result$conf.high <- stats::confint(model, level = 0.95)[, 2]
+  result <- broom.mixed::tidy(model, conf.int = TRUE, conf.level = 0.95)
   return(result)
 }
 
@@ -67,9 +66,7 @@ mixed_model_treatment_only <- function(data) {
     dplyr::mutate(teacher = ifelse(group == "virtual", 100, teacher))
 
   model <- lmerTest::lmer(post_score ~ group + (1|teacher), data = long_data)
-  result <- broom.mixed::tidy(model)
-  result$conf.low <- stats::confint(model, level = 0.95)[, 1]
-  result$conf.high <- stats::confint(model, level = 0.95)[, 2]
+  result <- broom.mixed::tidy(model, conf.int = TRUE, conf.level = 0.95)
   return(result)
 }
 
