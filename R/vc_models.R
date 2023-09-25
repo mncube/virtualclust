@@ -70,6 +70,41 @@ mixed_model_treatment_only <- function(data) {
   return(result)
 }
 
+#' Mixed Effect Model with Shared Group and Pair Identifier
+#'
+#' Internal function that fits a mixed-effect model using a shared group identifier and student identifier.
+#'
+#' @param data A list containing data from the \code{sim_tc_cv} function.
+#'
+#' @return A tibble with model results.
+#'
+#' @keywords internal
+mixed_model_shared_group_paired <- function(data) {
+  long_data <- convert_to_long(data$combined_data)
+  model <- lmerTest::lmer(post_score ~ group + (1|teacher) + (1|student_id), data = long_data)
+  result <- broom.mixed::tidy(model, conf.int = TRUE, conf.level = 0.95)
+  return(result)
+}
+
+#' Mixed Effect Model with Treatment-only Group and Pair Identifier
+#'
+#' Internal function that fits a mixed-effect model using a treatment-only group identifier and student identifier.
+#'
+#' @param data A list containing data from the \code{sim_tc_cv} function.
+#'
+#' @return A tibble with model results.
+#'
+#' @keywords internal
+mixed_model_treatment_only_paired <- function(data) {
+  long_data <- convert_to_long(data$combined_data) |>
+    dplyr::mutate(teacher = ifelse(group == "virtual", 100, teacher))
+
+  model <- lmerTest::lmer(post_score ~ group + (1|teacher) + (1|student_id), data = long_data)
+  result <- broom.mixed::tidy(model, conf.int = TRUE, conf.level = 0.95)
+  return(result)
+}
+
+
 #' Paired T-test Comparison
 #'
 #' Internal function that conducts a paired t-test comparison.

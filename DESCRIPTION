@@ -9,8 +9,11 @@ Description: When student data has a nested structure, the statistical models
   to match treatment and control student data and then control students are
   summarized into one virtual control for each treatment student. The
   'virtualclust' package provides tools to simulate data and compare models for
-  such data strucures. The sim_tc_cv() function is used to generate data while
-  the vc_summary() function is used to compare results from statistical models.
+  such data strucures. The sim_tc_cv() function is used to generate data with
+  no explicit intraclass correlation while sim_tc_cv_icc() is used to generate
+  data with with a user specified intraclass correlation. The vc_summary()
+  function is used to compare results from statistical models and the
+  virtualclust_simulation() function is used to conduct simulations.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -20,6 +23,7 @@ Imports:
     broom.mixed,
     dplyr,
     lmerTest,
+    MatchIt,
     stringr,
     tidyr
 Suggests: 

@@ -6,7 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of virtualclust is to …
+The goal of virtualclust is to facilate exploring education data with in
+the treatment group and virtual observations in the control group.
 
 ## Installation
 
@@ -30,27 +31,33 @@ statistical models.
 library(virtualclust)
 
 set.seed(123)
-sim_data <- sim_tc_cv(n_treatment = 100, n_control = 1000, n_matches = 10)
+sim_data <- sim_tc_cv_icc(n_treatment = 100, n_control = 1000, n_matches = 10,
+                          icc = 0.08)
 head(sim_data$combined_data)
-#>   student_id pre_score post_score teacher virtual_score
-#> 1          1  44.39524   44.89593       3      52.84955
-#> 2          2  47.69823   54.56884       1      49.79685
-#> 3          3  65.58708   49.53308       5      47.38696
-#> 4          4  50.70508   48.52457       1      53.16517
-#> 5          5  51.29288   42.48381       4      51.88730
-#> 6          6  67.15065   51.54972       2      45.61986
+#>   subclass student_id teacher treatment pre_score post_score   distance weights
+#> 1        1          1       4         1  44.44194   71.35603 0.09834290       1
+#> 2       10         17       3         1  60.24008   58.74606 0.07986495       1
+#> 3      100         99       1         1  39.82671   44.87586 0.10442031       1
+#> 4       11         18       4         1  34.68124   64.02092 0.11158486       1
+#> 5       12         19       1         1  47.88180   45.46483 0.09402019       1
+#> 6       13          2       1         1  69.39490   56.17653 0.07066337       1
+#>   virtual_score
+#> 1      51.12438
+#> 2      50.29263
+#> 3      55.21269
+#> 4      50.37830
+#> 5      49.15351
+#> 6      50.16163
 
 summary_results <- vc_summary(sim_data)
-#> boundary (singular) fit: see help('isSingular')
-#> boundary (singular) fit: see help('isSingular')
-#> boundary (singular) fit: see help('isSingular')
 head(summary_results)
-#> # A tibble: 5 × 8
+#> # A tibble: 6 × 8
 #>   term           estimate std.error statistic p.value conf.low conf.high model  
 #>   <chr>             <dbl>     <dbl>     <dbl>   <dbl>    <dbl>     <dbl> <chr>  
-#> 1 grouptreatment    0.484     0.994     0.487   0.627   -1.49       2.46 Mixed …
-#> 2 grouptreatment    0.484     1.02      0.475   0.635   -1.53       2.49 Mixed …
-#> 3 grouptreatment    0.484     1.02      0.475   0.635   -1.53       2.49 Mixed …
-#> 4 difference        0.484    NA        NA       0.627   -1.49       2.46 Paired…
-#> 5 difference        0.484    NA        NA       0.135   -0.152      1.12 Two-St…
+#> 1 grouptreatment     2.49     0.974     2.56   0.0120    0.559      4.42 Mixed …
+#> 2 grouptreatment     2.49     0.983     2.53   0.0120    0.553      4.43 Mixed …
+#> 3 grouptreatment     2.62     3.48      0.753  0.505    -8.27      13.5  Mixed …
+#> 4 grouptreatment     2.49     0.974     2.56   0.0120    0.559      4.42 Mixed …
+#> 5 grouptreatment     2.62     3.47      0.757  0.503    -8.27      13.5  Mixed …
+#> 6 difference         2.49    NA        NA      0.0120    0.559      4.42 Paired…
 ```

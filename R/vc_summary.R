@@ -20,6 +20,8 @@ vc_summary <- function(data, remove_re = TRUE, remove_int = TRUE) {
   pair_res <- mixed_model_pair(data)
   shared_group_res <- mixed_model_shared_group(data)
   treatment_only_res <- mixed_model_treatment_only(data)
+  shared_group_paired_res <- mixed_model_shared_group_paired(data)
+  treatment_only_paired_res <- mixed_model_treatment_only_paired(data)
   t_test_res <- paired_t_test(data)
   two_step_res <- two_step_t_test(data)
 
@@ -31,6 +33,10 @@ vc_summary <- function(data, remove_re = TRUE, remove_int = TRUE) {
       dplyr::mutate(model = "Mixed Model (Shared Group)"),
     dplyr::select(treatment_only_res, term, estimate, std.error, statistic, p.value, conf.low, conf.high) |>
       dplyr::mutate(model = "Mixed Model (Treatment Only)"),
+    dplyr::select(shared_group_paired_res, term, estimate, std.error, statistic, p.value, conf.low, conf.high) |>
+      dplyr::mutate(model = "Mixed Model (Shared Group Paired)"),
+    dplyr::select(treatment_only_paired_res, term, estimate, std.error, statistic, p.value, conf.low, conf.high) |>
+      dplyr::mutate(model = "Mixed Model (Treatment Only Paired)"),
     dplyr::select(t_test_res, estimate, p.value, conf.low, conf.high) |>
       dplyr::mutate(model = "Paired t-test", term = "difference", std.error = NA, statistic = NA),
     dplyr::select(two_step_res, estimate, p.value, conf.low, conf.high) |>

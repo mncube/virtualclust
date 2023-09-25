@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of virtualclust is to ...
+The goal of virtualclust is to facilate exploring education data with in the treatment group and virtual observations in the control group.
 
 ## Installation
 
@@ -39,7 +39,8 @@ After simulating data we summarize the results from different statistical models
 library(virtualclust)
 
 set.seed(123)
-sim_data <- sim_tc_cv(n_treatment = 100, n_control = 1000, n_matches = 10)
+sim_data <- sim_tc_cv_icc(n_treatment = 100, n_control = 1000, n_matches = 10,
+                          icc = 0.08)
 head(sim_data$combined_data)
 
 summary_results <- vc_summary(sim_data)

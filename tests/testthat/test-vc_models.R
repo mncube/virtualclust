@@ -19,6 +19,12 @@ test_that("vc_models functions work", {
   mixed_model_treatment_only_res <- mixed_model_treatment_only(simulated_data)
   expect_s3_class(mixed_model_treatment_only_res, "tbl_df")
 
+  mixed_model_shared_group_paired_res <- mixed_model_shared_group_paired(simulated_data)
+  expect_s3_class(mixed_model_shared_group_paired_res, "tbl_df")
+
+  mixed_model_treatment_only_paired_res <- mixed_model_treatment_only_paired(simulated_data)
+  expect_s3_class(mixed_model_treatment_only_paired_res, "tbl_df")
+
   paired_t_test_res <- paired_t_test(simulated_data)
   expect_s3_class(paired_t_test_res, "tbl_df")
 
